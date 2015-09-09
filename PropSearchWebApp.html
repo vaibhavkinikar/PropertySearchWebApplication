@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Property Search</title>
+<!--
+<BODY>
+This is for USC disclaimer
+</BODY>
+-->
+</title>
+<meta charset="utf-8">  
+<meta http-equiv="X-UA-Compatible" content="IE=edge">   
+<meta name="viewport" content="width=device-width, initial-scale=1"> 
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.js"></script>    
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.0/css/bootstrapValidator.min.css"/>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.0/js/bootstrapValidator.min.js"> </script>
+<style>
+body {
+    background-image:url("1.jpg");
+}
+.nav-tabs>li>a{color:rgb(255,255,255);}
+#line{ color:#ffffff; width:1210px;}
+.carousel-indicators{margin-left:-3px;}
+
+
+		   #Basic-Info{margin-left:70px; text-decoration:none;
+		   width:1210px; }
+		   #chart{ text-decoration:none; border-radius:3.5px;}
+		   #myTab{margin-left:70px;}
+#div1{margin-left:50px;}
+h3{margin-left:63px;}
+#btnsubmit{height:35px; width:100px; background-color:#FFA500;  }
+
+
+@-webkit-viewport   { width: device-width; }
+@-moz-viewport      { width: device-width; }
+@-ms-viewport       { width: device-width; }
+@-o-viewport        { width: device-width; }
+@viewport           { width: device-width; }
+
+/* Box-sizing resets
+ *
+ * Reset individual elements or override regions to avoid conflicts due to
+ * global box model settings of Bootstrap. Two options, individual overrides and
+ * region resets, are available as plain CSS and uncompiled Less formats.
+ */
+
+/* Option 1A: Override a single element's box model via CSS */
+.element {
+  -webkit-box-sizing: content-box;
+     -moz-box-sizing: content-box;
+          box-sizing: content-box;
+}
+
+/* Option 1B: Override a single element's box model by using a Bootstrap Less mixin */
+.element {
+  .box-sizing(content-box);
+}
+
+/* Option 2A: Reset an entire region via CSS */
+.reset-box-sizing,
+.reset-box-sizing *,
+.reset-box-sizing *:before,
+.reset-box-sizing *:after {
+  -webkit-box-sizing: content-box;
+     -moz-box-sizing: content-box;
+          box-sizing: content-box;
+}
+
+/* Option 2B: Reset an entire region with a custom Less mixin */
+.reset-box-sizing {
+  &,
+  *,
+  *:before,
+  *:after {
+    .box-sizing(content-box);
+  }
+}
+.element {
+  .reset-box-sizing();
+}
+</style>
+<script>
+$(function () {
+  var nua = navigator.userAgent
+  var isAndroid = (nua.indexOf('Mozilla/5.0') > -1 && nua.indexOf('Android ') > -1 && nua.indexOf('AppleWebKit') > -1 && nua.indexOf('Chrome') === -1)
+  if (isAndroid) {
+    $('select.form-control').removeClass('form-control').css('width', '100%')
+  }
+})
+</script>
+
+<script>
+
+window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '307204212816603',
+      xfbml      : true,
+      version    : 'v2.2'
+    });
+  };
+
+ /* FB.getLoginStatus(function(response) {
+  if (response.status === 'connected') {
+    console.log('Logged in.');
+  }
+  else {
+    FB.login();
+  }
+	});*/
+
+	
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+
+
+</script>
+
+<script>
+
+	
+function fb_post(){	
+FB.ui(
+{
+method: 'feed',
+name: x['street']+', '+x['city']+', '+x['state']+'-'+x['zip'],
+caption: 'Property Information from Zillow.com',
+description: "Last Sold Price: $"+x['lastsoldprice1']+", 30 Days Overall Change: $"+x['thirtydaysoverall'],
+display:'popup',
+link: x['hyplink'],
+picture: x['graph1']
+},
+
+ function(response){if(response && response.post_id){
+		 alert("Posted Successfully");} else { alert("Not Posted");}});
+
+}
+
+</script>
+
+<script>
+$(document).ready(function() {
+    $('#myform').bootstrapValidator({
+	container:'#messages',
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            street: {
+			feedbackIcons: 'false',
+                validators: {
+                    notEmpty: {
+                        message: '<div style="position:absolute;margin-top:-8px;margin-left:200px;color:red;"><b>This field is required.</b></div>'
+                    }
+                }
+            },
+			city: {
+			feedbackIcons: 'false',
+                validators: {
+                    notEmpty: {
+                        message: '<div style="position:absolute;margin-top:-8px;margin-left:480px;color:red;"><span><b>This field is required.</b></span></div>' 
+                    }
+                }
+            },
+			state: {
+			feedbackIcons: 'false',
+                validators: {
+                    notEmpty: {
+                        message: '<div style="position:absolute;margin-top:-8px;margin-left:700px;color:red;"><span><b>This field is required.<b></span></div>'
+                    }
+                }
+            }
+        }
+    });
+});
+</script>
+
+
+
+
+<script>
+
+$(document).ready(
+function()
+{
+	
+	$('#myform').submit
+	(function()
+	{
+	
+	$.ajax
+	(
+		{
+		    type:"GET",
+			dataType:'json',
+			url:'http://cs-server.usc.edu:30378/index.php',
+			data:$('#myform').serialize(),
+			success:function (data)
+			{   
+				console.log(data);
+			    x=jQuery.parseJSON(JSON.stringify(data));
+				var htmltext=" ";
+				if(x['code']!="0")
+				{
+				htmltext+="<h3 align=\"center\" style='color:red' >No exact match found-- Verify that the given address is correct.</h3>";
+      htmltext+="<p align='center'><span style='color:white'>&copy; Zillow, Inc., 2006-2014. Use is subject to </span><a target='_blank' href='http://www.zillow.com/corp/Terms.htm'><span style='color:#FFA500'>Terms of Use</span></a><br/><a target='_blank' href='http://www.zillow.com/zestimate/'><span style='color:#FFA500'>What's a Zestimate?</span></a></p>";
+					$('#result').html(htmltext);
+					return;
+				}
+		      htmltext="<ul class='nav nav-tabs' style='border:none' role='tablist' id='myTab'><li style='background-color:#FFA500' class='active'><a href='#Basic-Info' role='tab' data-toggle='tab' style='text-decoration:none'>Basic Info</a></li> <li style='background-color:#FFA500' ><a href='#chart' role='tab' data-toggle='tab'>Historical Zestimates</a></li></ul>";
+				htmltext+="<div class='tab-content table-responsive' ><div class='tab-pane fade in active' id='Basic-Info' style='border-radius:3.5px;' >";
+				htmltext+="<div id='table-div' class='tab-responsive' style='box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.05) inset, 0px 0px 8px rgba(255, 153, 51, 0.6)' >";
+    htmltext+="<table id='tab1' class='table table-striped' style='background-color:#ffffff; width:1210px'>";
+	htmltext+="<tr><td class='align-left' colspan=5>See more details for &nbsp;<a style='outline: none; -moz-outline-style: none; text-decoration:none; color:#FFA500;' target='_blank'  href='"+x['hyplink']+"'><b>"+x['street']+","+x['city']+","+x['state']+"-"+x['zip']+"</b></a> on Zillow<a href='javascript:fb_post();'><img align='right' src='http://static.excelined.org/wp-content/uploads/Share-on-Facebook.png' width='150' height='40'/></a></td></tr>";
+	htmltext+="<tr><td width='420px'>Property Type:</td><td width='120px'>"+x.ptype+"</td>";
+	
+	if(x['lastsoldprice'] == "")
+	{
+	x['lastsoldprice']="N/A";
+	htmltext+="<td width='400px'>Last Sold Price: </td><td align='right'>"+x['lastsoldprice']+"</td></tr>";
+	}
+	else
+	{
+	htmltext+="<td width='400px'>Last Sold Price: </td><td align='right'>&dollar;"+x['lastsoldprice1']+"</td></tr>";
+	}
+	htmltext+="<tr><td>Year Built:</td><td >"+x['ybuilt']+"</td><td>Last Sold Date: </td><td align='right'>"+x['date1']+"</td></tr>";
+	
+	if(x['lotsize'] == "") 
+	{
+	x['lotsize']="N/A";
+	htmltext+="<tr><td>Lot Size:</td><td >"+x['lotsize']+"</td>";
+	}
+	else
+	{
+	htmltext+="<tr><td>Lot Size:</td><td >"+x['lotsize1']+"sq.ft.</td>";
+	}
+	if(x['zestimateamt'] == "") 
+	{
+	x['zestimateamt']="N/A";
+	htmltext+="<td>Zestimate<sup>&reg;</sup> Property Estimate as of "+x['zestimatedate12']+": </td><td align='right'>"+x['zestimateamt']+"</td></tr>";
+	}
+	else
+	{
+	htmltext+="<td>Zestimate<sup>&reg;</sup> Property Estimate as of "+x['zestimatedate12']+": </td><td align='right'>&dollar;"+x['zestimateamt1']+"</td></tr>";
+	}
+	if(x['finishedarea'] == "") 
+	{
+	x['finishedarea']="N/A";
+    htmltext+="<tr><td>Finished Area:</td><td >"+x['finishedarea']+"</td>";
+	}
+	else
+	{
+	htmltext+="<tr><td>Finished Area:</td><td >"+x['finishedarea1']+" sq.ft.</td>";
+	}
+	
+	if(x['thirtydaysoverall'] == "") 
+	{
+	x['thirtydaysoverall']="N/A";
+    htmltext+="<td>30 Days Overall Change:</td><td align='right'>"+x['thirtydaysoverall']+"</td></tr>";
+	}
+	else
+	{
+    if(x['thirtydaysoverall']<0)
+	{
+	htmltext+="<td>30 Days Overall Change : </td><td align='right'><img src = 'red.gif' />&dollar;"+x['thirtydaysoverall12']+" </td></tr>";
+	}
+	else
+	{
+	htmltext+="<td>30 Days Overall Change : </td><td align='right'><img src = 'green.gif' />&dollar;"+x['thirtydaysoverall12']+" </td></tr>";
+	}
+	}
+	htmltext+="<tr><td>Bathrooms:</td><td > "+x['bathroom']+"</td>";
+	
+	if(x['alltimeproprange1'] == "")
+	{
+	htmltext+="<td>All Time Property Range: </td><td align='right'> N/A</td></tr>";
+	}
+	else
+	{
+	htmltext+="<td>All Time Property Range: </td><td align='right'> &dollar;"+x['alltimeproprange11']+"&nbsp;-&nbsp;&dollar;"+x['alltimeproprange12']+"</td></tr>";
+	}
+	
+	
+	htmltext+="<tr><td>Bedrooms:</td><td > "+x['bedrooms']+"</td>";
+	
+	if(x['rentzestimateamt1'] == "") 
+	{
+	x['rentzestimateamt']="N/A";
+	htmltext+="<td>Rent Zestimate<sup>&reg;</sup> Valuation as of "+x['rentzestimatedate12']+": </td><td align='right'>"+x['rentzestimateamt']+"</td></tr>";
+	}
+	else
+	{
+	htmltext+="<td>Rent Zestimate<sup>&reg;</sup> Valuation as of "+x['rentzestimatedate12']+": </td><td align='right'> &dollar;"+x['rentzestimateamt1']+"</td></tr>";
+	}
+	htmltext+="<tr><td>Tax Assessment Year:</td><td >"+x['tayear']+" </td>";
+	
+	if(x['thirtydaysrent'] == "") 
+	{
+	x['thirtydaysrent']="N/A";
+	htmltext+="<td>30 Days Rent Change:</td><td align='right'>"+x['thirtydaysrent']+" </td></tr>";
+	}
+	else
+	{
+	if(x['thirtydaysrent']<0)
+	{
+	htmltext+="<td>30 Days Rent Change :</td><td align='right'><img src='red.gif' />&dollar;"+x['thirtydaysrent12']+" </td></tr>";
+	}
+	else
+	{
+		htmltext+="<td>30 Days Rent Change :</td><td align='right'><img src='green.gif' />&dollar;"+x['thirtydaysrent12']+" </td></tr>";
+	}
+	}
+	if(x['ta'] == "") 
+	{
+	x['ta']="N/A"; 
+	htmltext+="<tr><td>Tax Assessment:</td><td >"+x['ta']+" </td>";
+	}
+	else
+	{
+	htmltext+="<tr><td>Tax Assessment:</td><td >&dollar;"+x['ta1']+" </td>";
+	}
+	
+	if(x['alltimerentrange1'] && x['alltimerentrange2'] == "")
+	{
+	htmltext+="<td>All Time Rent Range: </td><td align='right'> N/A</td></tr>";
+	}
+	else
+	{
+	htmltext+="<td>All Time Rent Range: </td><td align='right'> &dollar;"+x['alltimerentrange11']+"&nbsp;-&nbsp;&dollar;"+x['alltimerentrange12']+"</td></tr>";
+	}
+	htmltext+="</table></div></div>";
+   
+				
+			htmltext+="<div class='tab-pane' id='chart' style='overflow-x:hidden'>";
+			htmltext+="<div id='carousel-example-generic' class='carousel slide' data-ride='carousel' style='background-color:white; margin-left:70px; border-color:#FFA500; border: 1px solid rgb(255, 255, 255); box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.05) inset, 0px 0px 8px rgba(255, 153, 51, 0.6); width:1200px'>";
+  
+htmltext+="<ol class='carousel-indicators' >";
+htmltext+="<li data-target='#carousel-example-generic' data-slide-to='0' class='active'></li>";
+htmltext+="<li data-target='#carousel-example-generic' data-slide-to='1'></li>";
+htmltext+="<li data-target='#carousel-example-generic' data-slide-to='2'></li>";
+htmltext+="</ol>";
+
+htmltext+="<div class='carousel-inner' role='listbox'>";
+
+htmltext+="<div class='item active' align='center'>";
+htmltext+="<img width='680px' height='280px' src="+x['graph1']+" alt='chart'>";
+htmltext+="<div class ='carousel-caption' style='width:1230px;margin-left:-246px;height:35px;background-color:rgba(0,0,0,0.6);margin-bottom:-20px;margin-top:50px;'>";
+htmltext+="<p align='left' style='margin-left:20px;color:white;font-size:20px; margin-top:-20px;'>Historical Zestimates for the past 1 year";
+htmltext+="<p align='left' style='font-size:12px;margin-left:20px;margin-top:-15px; color:white'> "+x.street+","+x.city+","+x['state']+"-"+x['zip']+" </p>";	
+htmltext+="</div>";		
+htmltext+='</div>';
+
+htmltext+="<div class='item' align='center'>";
+htmltext+="<img width='680px' height='280px' src="+x['graph5']+" alt='chart'>";
+htmltext+="<div class ='carousel-caption' style='width:1230px;margin-left:-246px;height:35px;background-color:rgba(0,0,0,0.6);margin-bottom:-20px;margin-top:50px;'>";
+htmltext+="<p align='left' style='margin-left:20px;color:white;font-size:20px; margin-top:-20px;'>Historical Zestimates for the past 5 years";
+htmltext+="<p align='left' style='font-size:12px;margin-left:20px;margin-top:-15px; color:white'> "+x['street']+","+x['city']+","+x['state']+"-"+x['zip']+" </p>";
+htmltext+='</div>';
+htmltext+='</div>';
+
+htmltext+="<div class='item' align='center'>";
+htmltext+="<img width='680px' height='280px' src="+x['graph10']+" alt='chart'>";
+htmltext+="<div class ='carousel-caption' style='width:1230px;margin-left:-246px;height:35px;background-color:rgba(0,0,0,0.6);margin-bottom:-20px;margin-top:50px;'>";
+htmltext+="<p align='left' style='margin-left:20px;color:white;font-size:20px; margin-top:-20px;'>Historical Zestimates for the past 10 years";
+htmltext+="<p align='left' style='font-size:12px;margin-left:20px;margin-top:-15px; color:white'> "+x['street']+","+x['city']+","+x['state']+"-"+x['zip']+" </p>";
+htmltext+='</div>';
+htmltext+='</div>';
+    
+
+ 
+htmltext+="<a class='left carousel-control' href='#carousel-example-generic' role='button' data-slide='prev'>";
+htmltext+="<span class='glyphicon glyphicon-chevron-left'></span>";
+htmltext+="<span class='sr-only'>Previous</span>";
+htmltext+='</a>';
+htmltext+="<a class='right carousel-control' href='#carousel-example-generic' role='button' data-slide='next'>";
+htmltext+="<span class='glyphicon glyphicon-chevron-right'></span>";
+htmltext+="<span class='sr-only'>Next</span>";
+htmltext+="</a>";
+htmltext+='</div>';
+			
+			htmltext+="</div></div>";
+				htmltext+="<p align='center'><span style='color:white'>&copy; Zillow, Inc., 2006-2014. Use is subject to </span><a target='_blank' href='http://www.zillow.com/corp/Terms.htm'><span style='color:#FFA500'>Terms of Use</span></a><br/><a target='_blank' href='http://www.zillow.com/zestimate/'><span style='color:#FFA500'>What's a Zestimate?</span></a></p>";
+ 
+				
+				
+		$('#result').html(htmltext);
+				
+			
+			},
+			
+			error:function(){}
+		}
+	);
+	return false;
+	});
+});
+</script>
+
+
+
+
+
+</head>
+<body style='overflow-x:hidden'>
+
+<h3 style="color:#FFA500">Search Your Property Here</h3><br>
+<div id="div1" style="color:#FFA500">
+<form id="myform" method="GET" class="form-inline" action="">
+
+<div class="form-group" style="display:inline">
+<div class="form-group col-xs-3"><label >Street Address*:</label><input style ='height:32px' type="text" placeholder="Address" class="form-control" name="street" style="display:inline"/></div>
+<div class="form-group col-xs-3">&nbsp;&nbsp;&nbsp;&nbsp;<label style="display:inline">City*:</label>&nbsp;<input type="text" placeholder="City" class="form-control" name="city" style="display:inline" /></div>
+<div class="form-group col-xs-2 col-xs-pull-1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>State*:</label>	
+<select name="state" class="form-control">
+	<option value=""></option>
+	<option value="AK">AK</option>
+
+	<option value="AL">AL</option>
+	<option value="AR">AR</option>
+	<option value="AZ">AZ</option>
+	<option value="CA">CA</option>
+
+	<option value="CO">CO</option>
+	<option value="CT">CT</option>
+	<option value="DC">DC</option>
+	<option value="DE">DE</option>
+
+	<option value="FL">FL</option>
+	<option value="GA">GA</option>
+	<option value="HI">HI</option>
+	<option value="IA">IA</option>
+
+	<option value="ID">ID</option>
+	<option value="IL">IL</option>
+	<option value="IN">IN</option>
+	<option value="KS">KS</option>
+
+	<option value="KY">KY</option>
+	<option value="LA">LA</option>
+	<option value="MA">MA</option>
+	<option value="MD">MD</option>
+
+	<option value="ME">ME</option>
+	<option value="MI">MI</option>
+	<option value="MN">MN</option>
+	<option value="MO">MO</option>
+
+	<option value="MS">MS</option>
+	<option value="MT">MT</option>
+	<option value="NC">NC</option>
+	<option value="ND">ND</option>
+
+	<option value="NE">NE</option>
+	<option value="NH">NH</option>
+	<option value="NJ">NJ</option>
+	<option value="NM">NM</option>
+
+	<option value="NV">NV</option>
+	<option value="NY">NY</option>
+	<option value="OH">OH</option>
+	<option value="OK">OK</option>
+
+	<option value="OR">OR</option>
+	<option value="PA">PA</option>
+	<option value="RI">RI</option>
+	<option value="SC">SC</option>
+
+	<option value="SD">SD</option>
+	<option value="TN">TN</option>
+	<option value="TX">TX</option>
+	<option value="UT">UT</option>
+
+	<option value="VA">VA</option>
+	<option value="VT">VT</option>
+	<option value="WA">WA</option>
+	<option value="WI">WI</option>
+
+	<option value="WV">WV</option>
+	<option value="WY">WY</option>
+</select></div>
+<div class="form-group col-xs-2 col-xs-pull-1"><button type = "submit" id="btnsubmit" class="btn btn-primary" value="Submit">Submit</button></div>
+<div id="img1"><a align='right' style="outline: none; -moz-outline-style: none; text-decoration:none" target="_blank" href="http://www.zillow.com"><img src="http://www.zillow.com/widgets/GetVersionedResource.htm?path=/static/logos/Zillowlogo_150x40_rounded.gif" width="150" height="40" alt="Zillow Real Estate Search" /></a></div>
+
+</div>
+ </form>
+ </div>
+ <div id="messages"></div>
+<hr id="line">
+ <div id="result"></div>
+
+
+
+
+</body>
+</html>
